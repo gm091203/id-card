@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Local databases and private customer data (Strictly ignore for GitHub privacy)
+data/orders.json
+data/orders.txt
+
+# Customer photograph files
+public/uploads/*
+!public/uploads/.gitkeep
+
+# OS system files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

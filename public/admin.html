@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ID CARD LAB | 어드민 대시보드</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Admin Custom CSS -->
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <!-- Background Orbs -->
+  <div class="glow-orb orb-admin-1"></div>
+  <div class="glow-orb orb-admin-2"></div>
+
+  <div class="admin-container">
+    <header class="admin-header">
+      <div class="header-left">
+        <a href="/" class="btn-back-home" title="메인 페이지로">
+          <i data-lucide="arrow-left"></i>
+        </a>
+        <div class="admin-logo">
+          <i data-lucide="layout-dashboard"></i>
+          <span>LAB <span>ADMIN</span></span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="system-time">SERVER STATUS: <span class="status-online">ONLINE</span></span>
+      </div>
+    </header>
+
+    <!-- Stats Section -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon-wrapper cyan">
+          <i data-lucide="shopping-bag"></i>
+        </div>
+        <div class="stat-info">
+          <h3>총 주문 건수</h3>
+          <p id="statTotal">0</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-wrapper pink">
+          <i data-lucide="clock"></i>
+        </div>
+        <div class="stat-info">
+          <h3>입금 대기</h3>
+          <p id="statPending">0</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-wrapper green">
+          <i data-lucide="check-square"></i>
+        </div>
+        <div class="stat-info">
+          <h3>제작/입금 완료</h3>
+          <p id="statCompleted">0</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter & Controls Section -->
+    <section class="controls-section">
+      <div class="search-box">
+        <i data-lucide="search" class="search-icon"></i>
+        <input type="text" id="searchInput" placeholder="주문자 이름, 입금자명, 주문 코드로 검색...">
+      </div>
+
+      <div class="filter-box">
+        <label for="statusFilter">상태 필터:</label>
+        <select id="statusFilter">
+          <option value="all">전체 상태</option>
+          <option value="pending_deposit">입금 대기</option>
+          <option value="completed">제작/입금 완료</option>
+        </select>
+      </div>
+
+      <button class="btn-export-csv" id="btnExportCSV" title="조회된 주문 내역 엑셀 파일로 내보내기">
+        <i data-lucide="download"></i> <span>엑셀(CSV) 다운로드</span>
+      </button>
+    </section>
+
+    <!-- Orders Table Section -->
+    <section class="table-section">
+      <div class="table-wrapper">
+        <table class="orders-table">
+          <thead>
+            <tr>
+              <th>신청 일시</th>
+              <th>주문 코드</th>
+              <th>주문자명 (한글/한자)</th>
+              <th>생년월일 / 성별</th>
+              <th>신분증 사진</th>
+              <th>주소 (신분증)</th>
+              <th>배송지 정보</th>
+              <th>입금자명</th>
+              <th>결제 상태</th>
+              <th>관리</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTableBody">
+            <!-- Dynamic Injection from admin.js -->
+            <tr>
+              <td colspan="10" class="no-data">주문 내역을 불러오는 중입니다...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- Detail Photo Preview Modal -->
+  <div class="modal-overlay hidden" id="photoModal">
+    <div class="photo-modal-card">
+      <div class="photo-modal-header">
+        <h3>신분증 업로드 사진 원본</h3>
+        <button class="btn-close-photo-modal" id="btnClosePhotoModal">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="photo-modal-body">
+        <img id="modalFullImage" src="" alt="Full Uploaded Photo">
+        <div class="photo-meta">
+          <span id="photoMetaName">주문자: 홍길동</span>
+          <a href="#" id="btnDownloadPhoto" class="btn-download" download>
+            <i data-lucide="download"></i> 사진 다운로드
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lucide script setup -->
+  <script>
+    lucide.createIcons();
+  </script>
+  <!-- Admin Logic Script -->
+  <script src="js/admin.js"></script>
+</body>
+</html>

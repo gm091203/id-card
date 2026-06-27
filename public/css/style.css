@@ -1,0 +1,1279 @@
+/* Global Styles & Variables */
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121e;
+  --glass-bg: rgba(20, 20, 35, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --accent-cyan: #06b6d4;
+  --accent-purple: #8b5cf6;
+  --accent-pink: #ec4899;
+  --font-family: 'Noto Sans KR', 'Outfit', system-ui, sans-serif;
+  --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --card-height: 200px;
+  --card-width: 320px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Background Glowing Orbs */
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  z-index: -1;
+  opacity: 0.25;
+  pointer-events: none;
+}
+.orb-1 {
+  width: 400px;
+  height: 400px;
+  background: var(--accent-cyan);
+  top: -10%;
+  left: -10%;
+}
+.orb-2 {
+  width: 500px;
+  height: 500px;
+  background: var(--accent-purple);
+  bottom: -10%;
+  right: -10%;
+}
+.orb-3 {
+  width: 300px;
+  height: 300px;
+  background: var(--accent-pink);
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Layout container */
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Header */
+.app-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text-primary);
+}
+.logo-icon {
+  width: 38px;
+  height: 38px;
+  color: var(--accent-cyan);
+  filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.5));
+}
+.logo span span {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.tagline {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-top: 10px;
+  font-weight: 300;
+}
+
+/* Main Grid Layout */
+.app-main {
+  display: grid;
+  grid-template-columns: 1.1fr 1.3fr;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .app-main {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Section Common Styling */
+.preview-section, .form-section {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 30px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding-bottom: 15px;
+}
+.section-title i {
+  color: var(--accent-cyan);
+  width: 24px;
+  height: 24px;
+}
+.section-title h2 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+/* --- 1. Left Side: ID Card Live Preview Styling --- */
+.preview-section {
+  position: sticky;
+  top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.id-card-wrapper {
+  margin: 30px 0;
+}
+
+/* /* The actual physical ID card (Real Korean Resident ID Card replica styling) */
+.id-card {
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: 12px;
+  /* Pastel secure background mimicking real South Korean ID cards (Green, Pink, Yellow blends) */
+  background: 
+    radial-gradient(circle at 70% 30%, rgba(253, 242, 197, 0.9) 0%, rgba(253, 242, 197, 0) 70%),
+    radial-gradient(circle at 20% 80%, rgba(211, 235, 214, 0.9) 0%, rgba(211, 235, 214, 0) 70%),
+    linear-gradient(135deg, #d8ecd9 0%, #fcdede 50%, #fbf1c0 100%);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  position: relative;
+  overflow: hidden;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #1e1b18; /* Realistic dark charcoal/brown text color */
+}
+
+/* Fine-line security watermark patterns overlaid in background */
+.id-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Repeating thin wave patterns mimicking security prints */
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 4px,
+    rgba(255, 255, 255, 0.04) 5px,
+    rgba(255, 255, 255, 0.04) 6px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Anti-counterfeit Taegeuk (Yin-Yang) vector watermark in the center */
+.id-card::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(15deg);
+  width: 110px;
+  height: 110px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="none" stroke="rgba(236, 72, 153, 0.04)" stroke-width="1.5"/><path d="M50 12 A38 38 0 0 0 50 88 A19 19 0 0 0 50 50 A19 19 0 0 1 50 12" fill="rgba(6, 182, 212, 0.04)"/><path d="M50 12 A38 38 0 0 1 50 88 A19 19 0 0 0 50 50 A19 19 0 0 1 50 12" fill="rgba(236, 72, 153, 0.04)"/></svg>');
+  background-repeat: no-repeat;
+  background-size: contain;
+  pointer-events: none;
+  opacity: 0.95;
+  z-index: 1;
+}
+
+/* Card glass shimmer effect with watermark patterns */
+.card-shimmer {
+  position: absolute;
+  top: -150%;
+  left: -150%;
+  width: 300%;
+  height: 300%;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.04) 50%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  transform: rotate(-10deg);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Hologram secure watermark pattern overlay on left side */
+.chip-hologram {
+  position: absolute;
+  bottom: 20px;
+  left: 15px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.22) 0%, rgba(236, 72, 153, 0.12) 65%, rgba(255, 255, 255, 0) 100%);
+  border: 1px dashed rgba(6, 182, 212, 0.25);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  opacity: 0.9;
+  z-index: 2;
+}
+
+.card-header {
+  display: flex;
+  justify-content: center; /* Center the title like real IDs */
+  margin-bottom: 8px;
+  border-bottom: 1.5px double rgba(0, 0, 0, 0.08); /* Classic double line */
+  padding-bottom: 4px;
+  z-index: 2;
+}
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #110e0c;
+  letter-spacing: 14px; /* Wide spacing */
+  padding-left: 14px; /* Compensate letter-spacing offset */
+  font-family: 'Batang', 'Gungsuh', 'Georgia', serif; /* Serif typography for Korean Card Title */
+  text-shadow: 0.5px 0.5px 0px rgba(255,255,255,0.8);
+}
+
+/* Card Body */
+.card-body {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  flex: 1;
+  z-index: 2;
+}
+
+.card-photo-container {
+  position: relative;
+  width: 70px;
+  height: 93px;
+  margin-top: 2px;
+}
+
+.card-photo-frame {
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.photo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: rgba(0, 0, 0, 0.35);
+  font-size: 0.45rem;
+}
+.placeholder-icon {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 3px;
+  color: rgba(0, 0, 0, 0.25);
+}
+
+#cardPhotoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Watermark overlay on the photograph to prevent copying */
+.card-hologram {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centered on the photograph */
+  width: 54px;
+  height: 54px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.4) 0%, rgba(236, 72, 153, 0.3) 50%, rgba(255, 255, 255, 0.05) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  z-index: 3;
+  mix-blend-mode: color-dodge;
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.3), inset 0 0 8px rgba(255, 255, 255, 0.4);
+  pointer-events: none;
+  animation: hologram-spin 8s linear infinite;
+}
+.card-hologram i, .card-hologram svg {
+  width: 32px !important;
+  height: 32px !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.8));
+}
+
+@keyframes hologram-spin {
+  0% { 
+    transform: translate(-50%, -50%) rotate(0deg); 
+    filter: hue-rotate(0deg);
+  }
+  100% { 
+    transform: translate(-50%, -50%) rotate(360deg); 
+    filter: hue-rotate(360deg);
+  }
+}
+
+/* Card details (text) */
+.card-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px; /* Spacings between Name / Jumin / Addr */
+  flex: 1;
+  text-align: left;
+}
+
+.detail-row {
+  display: flex;
+  flex-direction: column;
+}
+.name-row {
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 6px;
+}
+.val-kr {
+  font-size: 1.25rem; /* Bold, highly visible Korean name */
+  font-weight: 700;
+  color: #0e0c0a;
+  letter-spacing: 2px;
+  line-height: 1;
+  font-family: 'Batang', 'Gungsuh', 'Georgia', serif; /* Traditional serif font for Holder name */
+}
+.val-en {
+  font-size: 0.62rem;
+  color: #554d45;
+  font-family: 'Outfit', sans-serif;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.val-num {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #1a1715;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 1.5px; /* Spaced out resident registration code */
+  line-height: 1;
+}
+.val-text {
+  font-size: 0.68rem;
+  color: #2b2621;
+  line-height: 1.35;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  max-height: 40px;
+  overflow: hidden;
+  margin-top: 1px;
+}
+
+/* Card Footer */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  padding-top: 6px;
+  z-index: 2;
+}
+.card-issue-date {
+  font-size: 0.72rem;
+  color: #3b352f;
+  font-family: 'Batang', 'Georgia', serif; /* Serif font for date */
+  font-weight: 600;
+  letter-spacing: 0.8px;
+}
+
+/* Authority name + Stamp seal container */
+.card-authority-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative; /* Allow child seal absolute overlay */
+}
+.card-authority {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #110e0c;
+  letter-spacing: 4px;
+  font-family: 'Batang', 'Gungsuh', 'Georgia', serif; /* Authority Serif */
+}
+
+/* Red Stamp Seal (직인) - Overlaps the last letter of authority realistically */
+.card-seal {
+  position: absolute;
+  right: -10px; /* Hang slightly off the edge of the authority name */
+  top: -2px;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid rgba(225, 45, 45, 0.85); /* Realistic red ink pigment */
+  color: rgba(225, 45, 45, 0.85);
+  font-size: 0.58rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  transform: rotate(-3deg);
+  background: rgba(255, 255, 255, 0.1); /* Slight transparency */
+  user-select: none;
+  font-family: 'Noto Sans KR', sans-serif;
+  box-shadow: 0 0 1px rgba(225, 45, 45, 0.3);
+  z-index: 5;
+}
+
+.preview-tip {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 20px;
+  text-align: center;
+  max-width: 290px;
+}
+.tip-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--accent-cyan);
+  flex-shrink: 0;
+}
+
+/* Media query adaptations for smaller viewports */
+@media (max-width: 480px) {
+  .preview-section {
+    padding: 18px; /* Reduce padding to give card more breathing room */
+    width: 100%;
+  }
+
+  .id-card-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: visible;
+  }
+
+  .id-card {
+    /* Scale card size dynamically when the screen size is smaller than the card */
+    transform: scale(0.9);
+    transform-origin: center;
+    margin: -10px 0; /* Offset scale margins to prevent large empty spaces */
+  }
+}
+
+@media (max-width: 360px) {
+  .id-card {
+    transform: scale(0.8);
+    margin: -20px 0;
+  }
+}
+
+/* --- 2. Right Side: Order Info Input Form Styling --- */
+.form-group-wrapper {
+  margin-bottom: 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 25px;
+}
+.form-group-wrapper:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.form-group-wrapper h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.step-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+  color: #fff;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.required {
+  color: var(--accent-pink);
+}
+
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group input[type="date"],
+.form-group textarea {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  font-size: 0.92rem;
+  transition: var(--transition-smooth);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent-cyan);
+  background: rgba(6, 182, 212, 0.05);
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.15);
+}
+
+/* Resident Number Input layout styles */
+.jumin-input-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+.jumin-input-group input {
+  flex: 1;
+  text-align: center;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 3px;
+}
+.jumin-dash {
+  color: var(--text-secondary);
+  font-weight: 700;
+  font-size: 1.2rem;
+  user-select: none;
+}
+
+.helper-text {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* Hanja Converter input layouts */
+.hanja-input-wrapper {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+.hanja-input-wrapper input {
+  flex: 1;
+}
+.btn-convert-hanja {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-primary);
+  border-radius: 10px;
+  padding: 0 16px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  white-space: nowrap;
+}
+.btn-convert-hanja:hover {
+  background: var(--accent-cyan);
+  color: #fff;
+  border-color: var(--accent-cyan);
+}
+
+.hanja-candidates-container {
+  background: rgba(20, 20, 30, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 14px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+}
+.hanja-char-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 10px;
+}
+.hanja-char-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.hanja-char-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  min-width: 24px;
+  text-align: center;
+}
+.hanja-btn-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.btn-hanja-candidate {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+.btn-hanja-candidate:hover, .btn-hanja-candidate.active {
+  background: var(--accent-cyan);
+  color: #fff;
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 8px rgba(6, 182, 212, 0.4);
+}
+
+/* Final Order Confirmation Modal Custom styles */
+.confirm-modal-card {
+  max-width: 650px;
+}
+.confirm-header {
+  background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-pink) 100%);
+}
+.confirm-ring {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.confirm-icon {
+  color: var(--accent-pink);
+}
+.confirm-modal-body {
+  padding: 40px 30px 20px 30px;
+}
+.confirm-info-section, .terms-section {
+  margin-top: 20px;
+  text-align: left;
+}
+.confirm-info-section h3, .terms-section h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  margin-bottom: 12px;
+  border-left: 3px solid var(--accent-cyan);
+  padding-left: 8px;
+}
+.confirm-info-grid {
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 12px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.confirm-info-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  font-size: 0.88rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  padding-bottom: 6px;
+}
+.confirm-info-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.info-label {
+  color: var(--text-secondary);
+}
+.info-value {
+  color: var(--text-primary);
+  word-break: break-all;
+}
+.text-italic {
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+/* Terms guidelines scroll styling */
+.terms-scroll-box {
+  max-height: 180px;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+/* Scrollbar custom style */
+.terms-scroll-box::-webkit-scrollbar {
+  width: 6px;
+}
+.terms-scroll-box::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+.terms-scroll-box::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+.terms-scroll-box::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.terms-lead {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.terms-chapter h4 {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  margin-top: 6px;
+}
+.terms-chapter p {
+  margin-bottom: 4px;
+}
+
+/* Consent checkboxes */
+.consent-checkbox-wrapper {
+  margin-top: 20px;
+  background: rgba(236, 72, 153, 0.04);
+  border: 1px dashed rgba(236, 72, 153, 0.15);
+  border-radius: 12px;
+  padding: 14px 18px;
+  text-align: left;
+}
+.consent-checkbox-label {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+.consent-checkbox-label input[type="checkbox"] {
+  accent-color: var(--accent-pink);
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.consent-checkbox-label span {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+
+/* Footer buttons layout */
+.confirm-footer-buttons {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 14px;
+  padding: 0 30px 30px 30px;
+}
+.btn-cancel-confirm {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+.btn-cancel-confirm:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+}
+.btn-final-submit {
+  background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-pink) 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.2);
+}
+.btn-final-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(236, 72, 153, 0.4);
+}
+.btn-final-submit:disabled {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Radio Button Group styling */
+.radio-group {
+  display: flex;
+  gap: 15px;
+  height: 48px;
+  align-items: center;
+}
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.radio-label input[type="radio"] {
+  accent-color: var(--accent-cyan);
+  width: 18px;
+  height: 18px;
+}
+.radio-label span {
+  font-size: 0.92rem;
+}
+
+/* Photo upload box */
+.upload-area {
+  border: 2px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  position: relative;
+}
+
+.upload-area:hover, .upload-area.dragover {
+  border-color: var(--accent-cyan);
+  background: rgba(6, 182, 212, 0.03);
+}
+
+.hidden-file-input {
+  display: none;
+}
+
+.upload-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.upload-icon {
+  width: 44px;
+  height: 44px;
+  color: var(--text-secondary);
+  transition: var(--transition-smooth);
+}
+.upload-area:hover .upload-icon {
+  color: var(--accent-cyan);
+  transform: translateY(-2px);
+}
+
+.upload-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.upload-limit {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* Photo upload preview */
+.upload-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+.upload-preview img {
+  width: 90px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.btn-remove-file {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition-smooth);
+}
+.btn-remove-file:hover {
+  background: rgba(239, 68, 68, 0.2);
+}
+.btn-remove-file i {
+  width: 14px;
+  height: 14px;
+}
+
+/* Submit button styling */
+.submit-container {
+  margin-top: 20px;
+}
+.btn-submit {
+  width: 100%;
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 8px 24px rgba(6, 182, 212, 0.3);
+  transition: var(--transition-smooth);
+}
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(6, 182, 212, 0.45);
+}
+.btn-submit i {
+  width: 20px;
+  height: 20px;
+  transition: var(--transition-smooth);
+}
+.btn-submit:hover i {
+  transform: translateX(4px);
+}
+
+/* Admin shortcut button */
+.admin-shortcut {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 50px;
+  height: 50px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: var(--transition-smooth);
+  z-index: 99;
+}
+.admin-shortcut:hover {
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+  transform: rotate(45deg);
+}
+
+/* --- 3. Success Payment Modal Overlay --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(5, 5, 10, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-card {
+  background: #11111d;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  max-width: 500px;
+  max-height: 90vh; /* Prevent height overflow past viewport */
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5),
+              0 0 40px rgba(6, 182, 212, 0.1);
+  transform: scale(1);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-overlay.hidden .modal-card {
+  transform: scale(0.9);
+}
+
+.modal-header-decor {
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 100%);
+  height: 80px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.success-ring {
+  width: 70px;
+  height: 70px;
+  background: #11111d;
+  border-radius: 50%;
+  position: absolute;
+  bottom: -35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.success-icon {
+  width: 44px;
+  height: 44px;
+  color: var(--accent-cyan);
+}
+
+.modal-body {
+  padding: 55px 35px 25px 35px;
+  text-align: center;
+  flex: 1;
+  overflow-y: auto; /* Enable inner vertical scrolling for overflow content */
+}
+
+.modal-body h2 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.modal-subtext {
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  margin-bottom: 25px;
+}
+
+.price-badge {
+  background: rgba(6, 182, 212, 0.08);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  border-radius: 12px;
+  padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 0.9rem;
+  margin-bottom: 25px;
+}
+.price-value {
+  color: var(--accent-cyan);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+/* Bank info details list card */
+.bank-details-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bank-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.92rem;
+}
+.bank-label {
+  color: var(--text-secondary);
+}
+.bank-value {
+  color: var(--text-primary);
+}
+.font-mono {
+  font-family: 'Outfit', monospace;
+  letter-spacing: 0.5px;
+}
+.font-medium {
+  font-weight: 500;
+}
+.text-accent {
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+.text-cyan {
+  color: var(--accent-cyan);
+  font-weight: 700;
+}
+
+.account-number-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-copy {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: var(--transition-smooth);
+}
+.btn-copy:hover {
+  background: var(--accent-cyan);
+  color: #fff;
+  border-color: var(--accent-cyan);
+}
+.copy-icon {
+  width: 12px;
+  height: 12px;
+}
+
+.modal-alert-box {
+  background: rgba(236, 72, 153, 0.06);
+  border: 1px solid rgba(236, 72, 153, 0.15);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  gap: 12px;
+  text-align: left;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  align-items: flex-start;
+  color: rgba(255, 255, 255, 0.9);
+}
+.modal-alert-box i {
+  color: var(--accent-pink);
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.modal-footer {
+  padding: 0 35px 35px 35px;
+}
+
+.btn-close-modal {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-primary);
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+.btn-close-modal:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Utilities */
+.hidden {
+  display: none !important;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.animate-bounce {
+  animation: bounce 2s infinite;
+}

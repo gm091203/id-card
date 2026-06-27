@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>미래형 디지털 신분증 제작소 | ID Card Lab</title>
+  <!-- Google Fonts: Outfit for numbers/English, Pretentard/Noto Sans KR for Korean -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons (via CDN for sleek, modern icons) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Background Glowing Orbs for futuristic depth -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <div class="app-container">
+    <header class="app-header">
+      <div class="logo">
+        <i data-lucide="shield-check" class="logo-icon"></i>
+        <span>ID CARD <span>LAB</span></span>
+      </div>
+      <p class="tagline">나만의 고품질 맞춤 신분증을 손쉽게 디자인하고 주문하세요.</p>
+    </header>
+
+    <main class="app-main">
+      <!-- 1. Left Side: Real-time Live Preview Card (Sticky) -->
+      <section class="preview-section">
+        <div class="section-title">
+          <i data-lucide="eye"></i>
+          <h2>실시간 신분증 미리보기</h2>
+        </div>
+        
+        <div class="id-card-wrapper">
+          <div class="id-card" id="idCard">
+            <!-- Glassmorphic shimmer reflection overlay -->
+            <div class="card-shimmer"></div>
+            
+            <!-- Card Header: Title centered like real Resident Card -->
+            <div class="card-header">
+              <span class="card-title">주민등록증</span>
+            </div>
+
+            <!-- Card Body: Left is text, Right is photo (Real Korean ID layout) -->
+            <div class="card-body">
+              <!-- Left side of card: User Details -->
+              <div class="card-details">
+                <div class="detail-row name-row">
+                  <span class="val-kr" id="cardNameKr">홍길동</span>
+                  <span class="val-en" id="cardNameHanja">(洪吉童)</span>
+                </div>
+                
+                <div class="detail-row">
+                  <span class="val-num" id="cardBirth">000101 - 1******</span>
+                </div>
+
+                <div class="detail-row address-row">
+                  <span class="val-text" id="cardAddress">서울특별시 마포구 백범로 35</span>
+                </div>
+              </div>
+
+              <!-- Right side of card: Photo frame -->
+              <div class="card-photo-container">
+                <div class="card-photo-frame" id="cardPhotoFrame">
+                  <div class="photo-placeholder" id="photoPlaceholder">
+                    <i data-lucide="user" class="placeholder-icon"></i>
+                    <span>사진</span>
+                  </div>
+                  <img id="cardPhotoImg" src="" alt="ID Photo" class="hidden">
+                </div>
+                <!-- Watermark hologram over photo -->
+                <div class="card-hologram">
+                  <i data-lucide="fingerprint"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Footer: Issue date on left, Authority & Seal on right -->
+            <div class="card-footer">
+              <div class="card-issue-date" id="cardIssueDate">2026. 06. 27.</div>
+              <div class="card-authority-wrapper">
+                <div class="card-authority" id="cardAuthority">마포구청장</div>
+                <!-- Red official seal stamp -->
+                <div class="card-seal">인</div>
+              </div>
+            </div>
+            
+            <!-- Safe microchip hologram print / pattern overlay background -->
+            <div class="chip-hologram"></div>
+          </div>
+        </div>
+        <p class="preview-tip"><i data-lucide="info" class="tip-icon"></i> 입력하신 정보가 실시간으로 신분증 미리보기에 반영됩니다.</p>
+      </section>
+
+      <!-- 2. Right Side: Order Info Input Form -->
+      <section class="form-section">
+        <div class="section-title">
+          <i data-lucide="edit-3"></i>
+          <h2>신분증 정보 입력</h2>
+        </div>
+
+        <form id="orderForm" class="order-form" enctype="multipart/form-data" novalidate>
+          <!-- Step 1: Personal Info -->
+          <div class="form-group-wrapper">
+            <h3><span class="step-num">01</span> 개인 정보 입력</h3>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">한글 성명 <span class="required">*</span></label>
+                <input type="text" id="name" name="name" placeholder="홍길동" required maxlength="10">
+              </div>
+              <div class="form-group">
+                <label for="hanjaName">한자 성명 <span class="required">*</span></label>
+                <div class="hanja-input-wrapper">
+                  <input type="text" id="hanjaName" name="hanjaName" placeholder="洪吉童" required maxlength="10">
+                  <button type="button" class="btn-convert-hanja" id="btnConvertHanja">한자 변환</button>
+                </div>
+                <div class="hanja-candidates-container hidden" id="hanjaCandidates"></div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>주민등록번호 <span class="required">*</span></label>
+                <div class="jumin-input-group">
+                  <input type="text" id="birth" name="birth" placeholder="970912" required maxlength="6" pattern="[0-9]{6}">
+                  <span class="jumin-dash">-</span>
+                  <input type="text" id="birthBack" name="birthBack" placeholder="1234567" required maxlength="7" pattern="[0-9]{7}">
+                </div>
+                <small class="helper-text">주민등록번호 13자리를 모두 입력하세요.</small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="address">주소 <span class="required">*</span></label>
+              <input type="text" id="address" name="address" placeholder="서울특별시 마포구 백범로 35" required maxlength="100">
+            </div>
+          </div>
+
+          <!-- Step 2: Custom ID Attributes -->
+          <div class="form-group-wrapper">
+            <h3><span class="step-num">02</span> 발급 항목 설정</h3>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="issueDate">발급 일자 <span class="required">*</span></label>
+                <input type="date" id="issueDate" name="issueDate" required>
+                <small class="helper-text">신분증 발급 일자를 지정하세요.</small>
+              </div>
+              <div class="form-group">
+                <label for="authority">발급 기관 <span class="required">*</span></label>
+                <input type="text" id="authority" name="authority" placeholder="마포구청장" required maxlength="20">
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Photo Upload -->
+          <div class="form-group-wrapper">
+            <h3><span class="step-num">03</span> 신분증 사진 업로드 <span class="required">*</span></h3>
+            <div class="upload-area" id="uploadArea">
+              <input type="file" id="photoInput" name="photo" accept="image/*" required class="hidden-file-input">
+              <div class="upload-prompt" id="uploadPrompt">
+                <i data-lucide="image-plus" class="upload-icon"></i>
+                <p class="upload-text">사진 파일을 드래그 앤 드롭하거나 클릭하여 선택하세요.</p>
+                <span class="upload-limit">권장 비율: 3x4 여권 사진 비율 (JPG, PNG)</span>
+              </div>
+              <div class="upload-preview hidden" id="uploadPreview">
+                <img id="filePreviewImg" src="" alt="Uploaded Face Preview">
+                <button type="button" class="btn-remove-file" id="btnRemoveFile">
+                  <i data-lucide="trash-2"></i> 삭제
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4: Shipping and Payment Info -->
+          <div class="form-group-wrapper">
+            <h3><span class="step-num">04</span> 배송지 및 결제 정보</h3>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="phone">연락처 (전화번호) <span class="required">*</span></label>
+                <input type="tel" id="phone" name="phone" placeholder="010-1234-5678" required>
+              </div>
+              <div class="form-group">
+                <label for="depositor">입금자명 <span class="required">*</span></label>
+                <input type="text" id="depositor" name="depositor" placeholder="송금하실 분의 실명을 입력하세요" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="deliveryAddress">배송받을 주소 <span class="required">*</span></label>
+              <input type="text" id="deliveryAddress" name="deliveryAddress" placeholder="제작된 실물 신분증을 배송받을 상세 주소를 입력하세요" required>
+            </div>
+
+            <div class="form-group">
+              <label for="note">추가 요청사항</label>
+              <textarea id="note" name="note" placeholder="요청 사항이 있으시면 입력해 주세요. (예: 제작 관련 요청사항 등)" rows="3" maxlength="300"></textarea>
+            </div>
+          </div>
+
+          <div class="submit-container">
+            <button type="submit" class="btn-submit" id="btnSubmit">
+              <span>신분증 제작 주문하기</span>
+              <i data-lucide="arrow-right"></i>
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <!-- Admin shortcut icon -->
+    <a href="#" class="admin-shortcut" id="adminShortcut" title="관리자 대시보드 바로가기">
+      <i data-lucide="settings"></i>
+    </a>
+  </div>
+
+  <!-- Step 1: Final Order Confirmation & Terms Agreement Modal Overlay -->
+  <div class="modal-overlay hidden" id="confirmOrderModal">
+    <div class="modal-card confirm-modal-card">
+      <div class="modal-header-decor confirm-header">
+        <div class="success-ring confirm-ring">
+          <i data-lucide="file-text" class="success-icon confirm-icon"></i>
+        </div>
+      </div>
+      
+      <div class="modal-body confirm-modal-body">
+        <h2>최종 주문 정보 확인 및 구매 약관 동의</h2>
+        <p class="modal-subtext">입력하신 신분증 정보와 배송지가 정확한지 확인하시고, 하단의 유의사항에 동의해 주세요.</p>
+        
+        <!-- compilation of user inputs -->
+        <div class="confirm-info-section">
+          <h3>신청자 제작 정보</h3>
+          <div class="confirm-info-grid">
+            <div class="confirm-info-row">
+              <span class="info-label">한글 성명 (한자)</span>
+              <span class="info-value font-medium" id="confirmName">홍길동 (洪吉童)</span>
+            </div>
+            <div class="confirm-info-row">
+              <span class="info-label">주민등록번호</span>
+              <span class="info-value font-mono" id="confirmBirth">000101-1234567</span>
+            </div>
+            <div class="confirm-info-row">
+              <span class="info-label">신분증 주소</span>
+              <span class="info-value" id="confirmAddress">서울특별시 마포구 백범로 35</span>
+            </div>
+            <div class="confirm-info-row">
+              <span class="info-label">발급일 / 발급기관</span>
+              <span class="info-value" id="confirmIssue">2026. 06. 27. / 마포구청장</span>
+            </div>
+            <div class="confirm-info-row">
+              <span class="info-label">배송 연락처</span>
+              <span class="info-value font-mono" id="confirmPhone">010-1234-5678</span>
+            </div>
+            <div class="confirm-info-row">
+              <span class="info-label">배송받을 주소</span>
+              <span class="info-value" id="confirmDeliveryAddress">서울특별시 마포구 백범로 35</span>
+            </div>
+            <div class="confirm-info-row">
+              <span class="info-label">입금자명</span>
+              <span class="info-value text-accent" id="confirmDepositor">홍길동</span>
+            </div>
+            <div class="confirm-info-row">
+              <span class="info-label">추가 요청사항</span>
+              <span class="info-value text-italic" id="confirmNote">-</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terms and Precautions Container -->
+        <div class="terms-section">
+          <h3>[공지] 주문 제작 상품 구매 전 이용약관 및 유의사항 안내</h3>
+          <div class="terms-scroll-box">
+            <p class="terms-lead">본 상품은 고객의 주문에 따라 개별적으로 제작되는 1:1 주문 제작 상품입니다. 전자상거래 등에서의 소비자보호에 관한 법률 등 관련 법령에 의거하여, 판매자는 구매 전 해당 내용을 명확히 고지할 의무가 있으며, 구매자는 이를 확인하고 동의할 책임이 있습니다.</p>
+            <p class="terms-lead">본 안내를 확인하지 않아 발생하는 불이익 및 고지된 과실에 대한 모든 책임은 구매자 본인에게 귀속되오니, 아래 내용을 반드시 숙지하신 후 신중한 구매를 진행해 주시기 바랍니다.</p>
+            
+            <div class="terms-chapter">
+              <h4>제1조 (주문 접수 및 환불 제한)</h4>
+              <p><strong>주문 취소 및 환불 불가:</strong> 본 상품은 결제(입금 확인) 완료와 동시에 원자재 발주 및 개별 제작 공정이 시작됩니다. 이에 따라 결제 완료 이후에는 고객의 단순 변심으로 인한 주문 취소, 변경, 환불이 절대 불가합니다.</p>
+              <p><strong>법적 근거:</strong> 전자상거래 등에서의 소비자보호에 관한 법률 제17조 제2항 및 동법 시행령 제21조에 의거, 소비자의 주문에 따라 개별적으로 생산되는 재화로서 청약철회 시 판매자에게 회복할 수 없는 중대한 피해가 예상되는 경우에 해당하여 반품 및 청약철회(환불)가 제한됩니다.</p>
+            </div>
+
+            <div class="terms-chapter">
+              <h4>제2조 (제작 및 배송 기간)</h4>
+              <p><strong>소요 기간:</strong> 본 상품의 평균 제작 및 배송 기간은 주문 접수일(영업일 기준)로부터 약 3일에서 5일 소요됩니다. (단, 토요일·일요일 및 공휴일은 기간 산정에서 제외됩니다.)</p>
+              <p><strong>배송 지연:</strong> 원자재 수급 사정, 택배사의 사정 또는 천재지변 등으로 인해 불가피하게 배송이 지연될 수 있으며, 지연 발생 시 등록된 연락처를 통해 개별 안내를 송부해 드립니다.</p>
+            </div>
+
+            <div class="terms-chapter">
+              <h4>제3조 (배송 정보 기재 오류 및 오배송 책임)</h4>
+              <p><strong>구매자 귀책사유:</strong> 구매자가 주문 시 입력한 배송 정보(수령인 명, 연락처, 주소 등)의 오기재, 불명확한 정보 입력 또는 고객 부재 등으로 인해 상품이 반송되거나 오배송되는 경우, 판매자는 이에 대한 책임을 지지 않습니다.</p>
+              <p><strong>비용 부담:</strong> 상기 사유로 인해 상품이 반송되어 재배송을 진행할 경우, 이로 인해 발생하는 왕복 배송비 및 재배송 비용 일체는 구매자가 전액 부담하여야 합니다. 주문 확정 전 배송지 정보를 다시 한번 명확히 확인해 주시기 바랍니다.</p>
+            </div>
+
+            <div class="terms-chapter">
+              <h4>제4조 (면책 조항)</h4>
+              <p>1. 사용자의 모니터 해상도, 모바일 기기 화면 설정 및 촬영 환경에 따른 미세한 색상 차이는 제품의 하자 또는 불량 사유에 해당하지 않습니다.</p>
+              <p>2. 주문 제작 공정 특성상 발생할 수 있는 미세한 오차(허용 범위 내의 사이즈 규격 차이, 미세한 스크래치 및 잔사 등)는 교환 및 반품 사유가 될 수 없습니다.</p>
+            </div>
+
+            <div class="terms-chapter">
+              <h4>[부칙]</h4>
+              <p>본 상품의 결제 및 구매를 완료한 고객은 상기 명시된 모든 이용 약관 및 유의사항을 충분히 숙지하고 이에 최종 동의한 것으로 간주합니다. 본 약관은 결제 완료 시점부터 상호 간의 효력이 발생합니다.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mandatory Consent Checkbox -->
+        <div class="consent-checkbox-wrapper">
+          <label class="consent-checkbox-label">
+            <input type="checkbox" id="agreeTerms">
+            <span>위 명시된 이용약관 및 유의사항을 모두 숙지하였으며, 입력한 제작 정보가 정확함을 확인합니다. <span class="required">*</span></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="modal-footer confirm-footer-buttons">
+        <button class="btn-cancel-confirm" id="btnCancelConfirm">돌아가서 수정</button>
+        <button class="btn-final-submit" id="btnFinalSubmit" disabled>입금완료</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success/Payment Modal Overlay -->
+  <div class="modal-overlay hidden" id="paymentModal">
+    <div class="modal-card">
+      <div class="modal-header-decor">
+        <div class="success-ring">
+          <i data-lucide="check-circle" class="success-icon animate-bounce"></i>
+        </div>
+      </div>
+      
+      <div class="modal-body">
+        <h2>신분증 신청이 접수되었습니다!</h2>
+        <p class="modal-subtext">아래 안내된 계좌로 제작 비용을 송금해 주시면, 입금 확인 후 즉시 제작 및 배송 절차가 시작됩니다.</p>
+        
+        <div class="price-badge">
+          <span>총 결제 금액</span>
+          <span class="price-value">70,000원</span>
+        </div>
+
+        <!-- Bank Account Card -->
+        <div class="bank-details-card">
+          <div class="bank-row">
+            <span class="bank-label">입금 은행</span>
+            <span class="bank-value">우리은행</span>
+          </div>
+          <div class="bank-row">
+            <span class="bank-label">계좌 번호</span>
+            <div class="account-number-wrapper">
+              <span class="bank-value font-mono" id="accountNumber">49304594818201</span>
+              <button class="btn-copy" id="btnCopyAccount" title="계좌번호 복사">
+                <i data-lucide="copy" class="copy-icon"></i>
+                <span class="copy-text">복사</span>
+              </button>
+            </div>
+          </div>
+          <div class="bank-row">
+            <span class="bank-label">예금주</span>
+            <span class="bank-value font-medium">아이디랩 (김경민)</span>
+          </div>
+          <div class="bank-row">
+            <span class="bank-label">입금자명</span>
+            <span class="bank-value text-accent" id="modalDepositor">홍길동</span>
+          </div>
+          <div class="bank-row">
+            <span class="bank-label">주문 코드</span>
+            <span class="bank-value font-mono text-cyan" id="modalOrderCode">ID8291</span>
+          </div>
+        </div>
+
+        <div class="modal-alert-box">
+          <i data-lucide="alert-triangle"></i>
+          <p>반드시 입력하신 입금자명 <strong><span id="modalDepositorConfirm">홍길동</span></strong>으로 입금해 주세요. 타인 명의 입금 시 확인이 지연될 수 있습니다.</p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-close-modal" id="btnCloseModal">주문 확인 완료</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lucide icons load execution script -->
+  <script>
+    lucide.createIcons();
+  </script>
+  <!-- Hanja Dictionary helper -->
+  <script src="js/hanja-dict.js"></script>
+  <!-- Main application javascript -->
+  <script src="js/app.js"></script>
+</body>
+</html>
