@@ -1294,13 +1294,37 @@ body {
     position: relative;
   }
 
-  /* 모바일 화면 좁을 때 모든 컨텐츠가 한눈에 다 보이도록 패딩 및 카드 폭 제한 */
+  /* 모바일 화면 좁을 때 모든 컨텐츠가 한눈에 다 보이도록 패딩 및 여백 최소화 */
   .app-container {
-    padding: 20px 12px !important;
+    padding: 10px 8px !important;
   }
   
+  .app-header {
+    margin-bottom: 12px !important;
+  }
+  
+  .logo {
+    font-size: 1.5rem !important;
+  }
+  
+  .tagline {
+    font-size: 0.82rem !important;
+    margin-top: 3px !important;
+  }
+
   .preview-section, .form-section {
-    padding: 16px !important;
+    padding: 12px !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2) !important;
+  }
+  
+  .section-title {
+    margin-bottom: 10px !important;
+    padding-bottom: 6px !important;
+  }
+  
+  .section-title h2 {
+    font-size: 1.05rem !important;
   }
 
   .id-card-wrapper {
@@ -1308,20 +1332,73 @@ body {
     display: flex !important;
     justify-content: center !important;
     overflow: visible !important;
-    margin: 15px 0 !important;
+    margin: 5px 0 !important;
   }
 
   .id-card {
-    /* 모바일 기기 화면에 맞게 카드가 적절히 축소되어 가로 스크롤 없이 한눈에 들어오게 함 */
-    transform: scale(0.85) !important;
+    /* 모바일 기기 화면 공간을 위해 카드를 대폭 축소하여 상하 스크롤을 줄임 */
+    transform: scale(0.68) !important;
     transform-origin: center !important;
-    margin: -15px 0 !important;
+    margin: -35px 0 !important;
+  }
+
+  /* 폼 요소 마진 및 패딩 최소화 */
+  .form-group-wrapper {
+    margin-bottom: 15px !important;
+    padding-bottom: 12px !important;
+  }
+  
+  .form-group-wrapper h3 {
+    font-size: 0.92rem !important;
+    margin-bottom: 12px !important;
+  }
+  
+  .form-group label {
+    font-size: 0.78rem !important;
+  }
+  
+  .form-row {
+    gap: 8px !important;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="tel"],
+  .form-group input[type="date"],
+  .form-group textarea,
+  .jumin-input-group input {
+    padding: 8px 12px !important;
+    font-size: 16px !important; /* Keep 16px to prevent iOS forced zoom, but make it look compact */
+    border-radius: 8px !important;
+  }
+
+  .helper-text {
+    font-size: 0.7rem !important;
+    margin-top: 2px !important;
+  }
+
+  .btn-submit {
+    padding: 10px !important;
+    font-size: 0.9rem !important;
+    border-radius: 10px !important;
+  }
+
+  /* 모달 사이즈도 컴팩트하게 조율 */
+  .modal-card {
+    padding: 15px !important;
+    border-radius: 16px !important;
+  }
+  
+  .modal-body h2 {
+    font-size: 1.15rem !important;
   }
 }
 
 @media (max-width: 380px) {
   .id-card {
-    transform: scale(0.76) !important;
-    margin: -25px 0 !important;
+    transform: scale(0.60) !important;
+    margin: -45px 0 !important;
+  }
+  .logo {
+    font-size: 1.3rem !important;
   }
 }
