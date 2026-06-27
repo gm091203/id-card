@@ -353,8 +353,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 8. Contact Phone Number Check
     const phoneVal = inputPhone.value.trim();
-    if (!phoneVal || !/^[0-9-]{9,14}$/.test(phoneVal)) {
-      focusAndScroll(inputPhone, '연락처(전화번호)를 정확히 입력해 주세요. (예: 010-1234-5678)');
+    if (!phoneVal) {
+      focusAndScroll(inputPhone, '연락처(전화번호)를 입력해 주세요.');
       return;
     }
 
@@ -420,7 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnFinalSubmit.addEventListener('click', async () => {
       const originalBtnText = btnFinalSubmit.innerHTML;
       btnFinalSubmit.disabled = true;
-      btnFinalSubmit.innerHTML = '<span>주문 접수 중...</span> <div class="spinner"></div>';
+      btnFinalSubmit.innerHTML = '<span>입금 확인 중...</span> <div class="spinner"></div>';
 
       const formData = new FormData(form);
 
