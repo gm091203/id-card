@@ -1328,18 +1328,22 @@ body {
   }
 
   .id-card-wrapper {
-    width: 100% !important;
+    width: 221px !important;
+    height: 139px !important;
     display: flex !important;
     justify-content: center !important;
+    align-items: center !important;
     overflow: visible !important;
-    margin: 5px 0 !important;
+    margin: 10px auto !important;
+    position: relative !important;
   }
 
   .id-card {
     /* 모바일 기기 화면 공간을 위해 카드를 대폭 축소하여 상하 스크롤을 줄임 */
-    transform: scale(0.68) !important;
+    transform: scale(0.65) !important;
     transform-origin: center !important;
-    margin: -35px 0 !important;
+    position: absolute !important;
+    margin: 0 !important;
   }
 
   /* 폼 요소 마진 및 패딩 최소화 */
@@ -1399,9 +1403,13 @@ body {
 }
 
 @media (max-width: 380px) {
+  .id-card-wrapper {
+    width: 187px !important;
+    height: 117px !important;
+  }
   .id-card {
-    transform: scale(0.60) !important;
-    margin: -45px 0 !important;
+    transform: scale(0.55) !important;
+    margin: 0 !important;
   }
   .logo {
     font-size: 1.3rem !important;
