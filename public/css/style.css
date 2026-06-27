@@ -1391,6 +1391,10 @@ body {
   .modal-body h2 {
     font-size: 1.15rem !important;
   }
+
+  .glow-orb {
+    display: none !important; /* Prevents background elements from breaking horizontal scaling boundaries */
+  }
 }
 
 @media (max-width: 380px) {
