@@ -507,15 +507,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 8. Run initial sync on load to map default values to the card preview
   updateCardText();
-
-  // 9. Reset viewport scroll when mobile inputs lose focus
-  const mobileInputs = document.querySelectorAll('input, select, textarea');
-  mobileInputs.forEach(input => {
-    input.addEventListener('blur', () => {
-      setTimeout(() => {
-        // Scroll reset to correct iOS Safari zoom offsets
-        window.scrollTo(0, window.scrollY);
-      }, 50);
-    });
-  });
 });

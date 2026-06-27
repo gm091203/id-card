@@ -7,27 +7,23 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Directories
-const DATA_DIR = process.env.RENDER ? '/data' : path.join(__dirname, 'data');
+const DATA_DIR = path.join(__dirname, 'data');
 const UPLOADS_DIR = path.join(DATA_DIR, 'uploads');
 const ORDERS_FILE = path.join(DATA_DIR, 'orders.json');
 const ORDERS_TXT_FILE = path.join(DATA_DIR, 'orders.txt');
 
-// Ensure directories exist safely (Wrap in try-catch to avoid crash loops on Render)
-try {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-  }
-  if (!fs.existsSync(UPLOADS_DIR)) {
-    fs.mkdirSync(UPLOADS_DIR, { recursive: true });
-  }
-  if (!fs.existsSync(ORDERS_FILE)) {
-    fs.writeFileSync(ORDERS_FILE, JSON.stringify([], null, 2));
-  }
-  if (!fs.existsSync(ORDERS_TXT_FILE)) {
-    fs.writeFileSync(ORDERS_TXT_FILE, '=== 신분증 제작 주문 내역 메모장 ===\n', 'utf8');
-  }
-} catch (err) {
-  console.error('Failed to initialize directories on startup:', err);
+// Ensure directories exist
+if (!fs.existsSync(DATA_DIR)) {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+}
+if (!fs.existsSync(UPLOADS_DIR)) {
+  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+}
+if (!fs.existsSync(ORDERS_FILE)) {
+  fs.writeFileSync(ORDERS_FILE, JSON.stringify([], null, 2));
+}
+if (!fs.existsSync(ORDERS_TXT_FILE)) {
+  fs.writeFileSync(ORDERS_TXT_FILE, '=== 신분증 제작 주문 내역 메모장 ===\n', 'utf8');
 }
 
 // Multer Config for photo uploads
