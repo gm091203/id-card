@@ -1293,4 +1293,35 @@ body {
     overflow-x: hidden; /* Prevents awkward horizontal sliding/moving */
     position: relative;
   }
+
+  /* 모바일 화면 좁을 때 모든 컨텐츠가 한눈에 다 보이도록 패딩 및 카드 폭 제한 */
+  .app-container {
+    padding: 20px 12px !important;
+  }
+  
+  .preview-section, .form-section {
+    padding: 16px !important;
+  }
+
+  .id-card-wrapper {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    overflow: visible !important;
+    margin: 15px 0 !important;
+  }
+
+  .id-card {
+    /* 모바일 기기 화면에 맞게 카드가 적절히 축소되어 가로 스크롤 없이 한눈에 들어오게 함 */
+    transform: scale(0.85) !important;
+    transform-origin: center !important;
+    margin: -15px 0 !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .id-card {
+    transform: scale(0.76) !important;
+    margin: -25px 0 !important;
+  }
 }
