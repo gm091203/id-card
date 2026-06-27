@@ -17,3 +17,7 @@ data/uploads/*
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Local sync tools
+sync.js
+실시간_주문_동기화.command
