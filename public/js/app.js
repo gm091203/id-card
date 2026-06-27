@@ -420,7 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnFinalSubmit.addEventListener('click', async () => {
       const originalBtnText = btnFinalSubmit.innerHTML;
       btnFinalSubmit.disabled = true;
-      btnFinalSubmit.innerHTML = '<span>입금 확인 중...</span> <div class="spinner"></div>';
+      btnFinalSubmit.innerHTML = '<span>주문 접수 중...</span> <div class="spinner"></div>';
 
       const formData = new FormData(form);
 

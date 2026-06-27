@@ -840,7 +840,7 @@ body {
 /* Footer buttons layout */
 .confirm-footer-buttons {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 2fr;
   gap: 14px;
   padding: 0 30px 30px 30px;
 }
