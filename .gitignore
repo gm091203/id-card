@@ -6,8 +6,8 @@ data/orders.json
 data/orders.txt
 
 # Customer photograph files
-public/uploads/*
-!public/uploads/.gitkeep
+data/uploads/*
+!data/uploads/.gitkeep
 
 # OS system files
 .DS_Store

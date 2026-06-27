@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 
 // Directories
 const DATA_DIR = path.join(__dirname, 'data');
-const UPLOADS_DIR = path.join(__dirname, 'public', 'uploads');
+const UPLOADS_DIR = path.join(DATA_DIR, 'uploads');
 const ORDERS_FILE = path.join(DATA_DIR, 'orders.json');
 const ORDERS_TXT_FILE = path.join(DATA_DIR, 'orders.txt');
 
@@ -44,6 +44,7 @@ const upload = multer({ storage: storage });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(UPLOADS_DIR));
 
 // Helper to read orders
 function readOrders() {
