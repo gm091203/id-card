@@ -488,7 +488,7 @@ body {
 /* Media query adaptations for smaller viewports */
 @media (max-width: 480px) {
   .preview-section {
-    padding: 18px; /* Reduce padding to give card more breathing room */
+    padding: 10px; /* Reduce padding for extra space */
     width: 100%;
   }
 
@@ -500,17 +500,26 @@ body {
   }
 
   .id-card {
-    /* Scale card size dynamically when the screen size is smaller than the card */
-    transform: scale(0.9);
+    /* Aggressive scaling down for standard mobile phones */
+    transform: scale(0.72) !important;
     transform-origin: center;
-    margin: -10px 0; /* Offset scale margins to prevent large empty spaces */
+    margin: -40px 0 !important; /* Offset scaling margins tightly */
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 375px) {
   .id-card {
-    transform: scale(0.8);
-    margin: -20px 0;
+    /* Shrink further for popular phone sizes */
+    transform: scale(0.65) !important;
+    margin: -50px 0 !important;
+  }
+}
+
+@media (max-width: 320px) {
+  .id-card {
+    /* Extreme shrink for legacy small mobile viewports */
+    transform: scale(0.58) !important;
+    margin: -60px 0 !important;
   }
 }
 
